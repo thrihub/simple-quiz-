@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .option {
+      margin: 10px 0;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz App</h1>
+    <div id="quiz" class="question"></div>
+    <ul class="options" id="options"></ul>
+    <button onclick="nextQuestion()">Next</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        options: ["Berlin", "Madrid", "Paris", "Rome"],
+        correctAnswer: "Paris"
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        correctAnswer: "Mars"
+      },
+       {
+                question: "Which planet is known as the 'Blue Planet'?",
+                options: ["Mars", "Earth", "Neptune", "Uranus"],
+                correctAnswer: "Earth"
+            },
+            {
+                question: "Who is the author of '1984'?",
+                options: ["George Orwell", "J.K. Rowling", "F. Scott Fitzgerald", "Aldous Huxley"],
+                correctAnswer: "George Orwell"
+            },
+            {
+                question: "What is the largest mammal on Earth?",
+                options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+                correctAnswer: "Blue Whale"
+            },
+            {
+                question: "In which year did the Titanic sink?",
+                options: ["1912", "1905", "1920", "1931"],
+                correctAnswer: "1912"
+            },
+            {
+                question: "Who painted 'Starry Night'?",
+                options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Leonardo da Vinci"],
+                correctAnswer: "Vincent van Gogh"
+            },
+            {
+                question: "What is the currency of Japan?",
+                options: ["Yen", "Won", "Baht", "Ringgit"],
+                correctAnswer: "Yen"
+            },
+            {
+                question: "Which element has the chemical symbol 'H'?",
+                options: ["Hydrogen", "Helium", "Hassium", "Hafnium"],
+                correctAnswer: "Hydrogen"
+            },
+            {
+                question: "Who wrote 'Pride and Prejudice'?",
+                options: ["Jane Austen", "Charlotte Brontë", "Emily Brontë", "Leo Tolstoy"],
+                correctAnswer: "Jane Austen"
+            },
+            {
+                 question: "What is the capital of Canada?",
+                options: ["Ottawa", "Toronto", "Vancouver", "Montreal"],
+                correctAnswer: "Ottawa"
+            },
+            {
+                question: "In which year did the Berlin Wall fall?",
+                options: ["1985", "1989", "1991", "1995"],
+                correctAnswer: "1989"
+            },
+             {
+                question: "Who invented the telephone?",
+                options: ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Marie Curie"],
+                correctAnswer: "Alexander Graham Bell"
+            },
+            {
+                question: "What is the largest desert in the world?",
+                options: ["Sahara Desert", "Arabian Desert", "Gobi Desert", "Antarctica"],
+                correctAnswer: "Antarctica"
+            },
+            {
+                question: "Which country is known as the 'Land of the Midnight Sun'?",
+                options: ["Norway", "Sweden", "Finland", "Iceland"],
+                correctAnswer: "Norway"
+            },
+            {
+                question: "Who wrote 'The Great Gatsby'?",
+                options: ["F. Scott Fitzgerald", "Ernest Hemingway", "J.D. Salinger", "Mark Twain"],
+                correctAnswer: "F. Scott Fitzgerald"
+            },
+            {
+                question: "What is the largest island in the world?",
+                options: ["Greenland", "Australia", "Borneo", "Madagascar"],
+                correctAnswer: "Greenland"
+            }
+     // Add more questions as needed
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      const quizElement = document.getElementById("quiz");
+      const optionsElement = document.getElementById("options");
+
+      quizElement.innerHTML = currentQuestion.question;
+
+      optionsElement.innerHTML = currentQuestion.options.map((option, index) => `
+        <li class="option">
+          <input type="radio" name="option" value="${option}" id="option${index}">
+          <label for="option${index}">${option}</label>
+        </li>
+      `).join("");
+    }
+
+    function nextQuestion() {
+      const selectedOption = document.querySelector('input[name="option"]:checked');
+      const resultElement = document.getElementById("result");
+
+      if (selectedOption) {
+        if (selectedOption.value === questions[currentQuestionIndex].correctAnswer) {
+          score++;
+        }
+
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+          loadQuestion();
+        } else {
+          // Display the final result
+          resultElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+        }
+
+        // Clear the selected option for the next question
+        selectedOption.checked = false;
+      } else {
+        resultElement.innerHTML = "Please select an option.";
+      }
+    }
+
+    // Initial question load
+    loadQuestion();
+  </script>
+</body>
+</html>
